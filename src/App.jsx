@@ -101,7 +101,6 @@ export default function App() {
     setActiveTab('current');
   };
 
-  // Funciones de edicion manual
   const addSubject = () => {
     setSubjects([...subjects, { id: crypto.randomUUID(), name: '', units: [{ id: crypto.randomUUID(), name: 'Unidad 1', grade: null }] }]);
   };
@@ -301,7 +300,6 @@ export default function App() {
 
         <div className="subjects-container" style={{ marginTop: '2rem' }}>
           
-          {/* TAB: CURRENT */}
           {activeTab === 'current' && (
             <>
               {subjects.length === 0 ? (
@@ -358,7 +356,6 @@ export default function App() {
             </>
           )}
 
-          {/* TAB: KARDEX */}
           {activeTab === 'kardex' && (
             <>
               {kardex.length === 0 ? (
@@ -419,7 +416,6 @@ export default function App() {
             </>
           )}
 
-          {/* TAB: MIS DATOS */}
           {activeTab === 'datos' && (
             <div className="glass-panel animate-slide-in" style={{ padding: '2rem' }}>
               <h2 style={{ color: 'var(--primary)', marginBottom: '1.5rem', borderBottom: '1px solid var(--card-border)', paddingBottom: '0.5rem' }}>
@@ -449,7 +445,6 @@ export default function App() {
             </div>
           )}
 
-          {/* TAB: ESTATUS DE CUENTA */}
           {activeTab === 'adeudos' && (
             <div className="glass-panel animate-slide-in" style={{ padding: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>

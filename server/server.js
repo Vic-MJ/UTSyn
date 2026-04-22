@@ -12,7 +12,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const sessions = {}; // Almacenamiento temporal de sesiones
+const sessions = {}; 
 
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
@@ -25,7 +25,6 @@ app.post('/api/login', async (req, res) => {
         const jar = new CookieJar();
         const client = wrapper(axios.create({ jar }));
 
-        // 1. Obtener la página de login
         const loginUrl = 'http://201.131.132.7/utsyn/glogin.aspx';
         const loginPage = await client.get(loginUrl);
         let $ = cheerio.load(loginPage.data);
@@ -34,7 +33,6 @@ app.post('/api/login', async (req, res) => {
         const viewStateGenerator = $('#__VIEWSTATEGENERATOR').val();
         const eventValidation = $('#__EVENTVALIDATION').val();
 
-        // 2. Hacer el POST del login
         const loginData = new URLSearchParams();
         loginData.append('__VIEWSTATE', viewState);
         loginData.append('__VIEWSTATEGENERATOR', viewStateGenerator);
@@ -50,7 +48,6 @@ app.post('/api/login', async (req, res) => {
             }
         });
 
-        // 3. Extraer Calificaciones del Cuatrimestre Actual
         const gradesUrl = 'http://201.131.132.7/utsyn/synstu/currentstu.aspx';
         const gradesResponse = await client.get(gradesUrl);
         $ = cheerio.load(gradesResponse.data);
@@ -63,14 +60,10 @@ app.post('/api/login', async (req, res) => {
         const studentCareer = $('#contenidocentral_lblcarrera').text().trim();
         const currentSubjects = [];
 
-        // 3.1 Extraer la url de la foto
         let photoBase64 = null;
         const photoSrc = $('#contenidocentral_btnimgUsuario').attr('src');
         if (photoSrc) {
             try {
-                // Puede ser una url relativa como "currentstu.aspx_files/1182181785.JPG" o absoluta
-                // Usualmente en la UTZMG es algo como "1182181785.JPG" o una ruta relativa a /utsyn/synstu/
-                // Para asegurarnos, construimos la ruta base
                 const baseUrl = 'http://201.131.132.7/utsyn/synstu/';
                 const photoFullUrl = photoSrc.startsWith('http') ? photoSrc : baseUrl + photoSrc;
                 
@@ -113,7 +106,6 @@ app.post('/api/login', async (req, res) => {
             });
         });
 
-        // 4. Extraer Kardex
         const kardexUrl = 'http://201.131.132.7/utsyn/synstu/kardexev.aspx';
         const kardexResponse = await client.get(kardexUrl);
         const $kardex = cheerio.load(kardexResponse.data);
@@ -150,7 +142,6 @@ app.post('/api/login', async (req, res) => {
             });
         });
 
-        // 5. Extraer Mis Datos (updata.aspx)
         const updataUrl = 'http://201.131.132.7/utsyn/synstu/updata.aspx';
         const updataResponse = await client.get(updataUrl);
         const $updata = cheerio.load(updataResponse.data);
@@ -171,7 +162,6 @@ app.post('/api/login', async (req, res) => {
             tipoSangre: $updata('#contenidocentral_ddltipoSangre option:selected').text(),
         };
 
-        // 6. Extraer Estatus de Cuenta (accountm.aspx)
         const accountmUrl = 'http://201.131.132.7/utsyn/synstu/accountm.aspx';
         const accountmResponse = await client.get(accountmUrl);
         const $accountm = cheerio.load(accountmResponse.data);
@@ -182,7 +172,6 @@ app.post('/api/login', async (req, res) => {
         };
 
         $accountm('#contenidocentral_gvalumnoAdeudo tr').each((i, tr) => {
-            // Ignorar encabezados
             if (i === 0 || $accountm(tr).hasClass('GridPager')) return;
 
             const tds = $accountm(tr).find('td');
@@ -212,7 +201,6 @@ app.post('/api/login', async (req, res) => {
             accountStatus: accountStatus
         });
 
-        // Guardar sesion para descargas futuras (ej. PDF)
         sessions[username] = jar;
 
     } catch (error) {
@@ -233,14 +221,12 @@ app.post('/api/print-order', async (req, res) => {
         const client = wrapper(axios.create({ jar }));
         const accountmUrl = 'http://201.131.132.7/utsyn/synstu/accountm.aspx';
 
-        // 1. Obtener los ViewStates actuales de la pagina de cuenta
         const accountPage = await client.get(accountmUrl);
         const $ = cheerio.load(accountPage.data);
         const viewState = $('#__VIEWSTATE').val();
         const viewStateGenerator = $('#__VIEWSTATEGENERATOR').val();
         const eventValidation = $('#__EVENTVALIDATION').val();
 
-        // 2. Hacer POST simulando el clic del boton "Impresión de orden"
         const printData = new URLSearchParams();
         printData.append('__VIEWSTATE', viewState);
         printData.append('__VIEWSTATEGENERATOR', viewStateGenerator);
@@ -252,10 +238,9 @@ app.post('/api/print-order', async (req, res) => {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Referer': accountmUrl
             },
-            responseType: 'arraybuffer' // Asegurarnos de recibir el PDF binario
+            responseType: 'arraybuffer'
         });
 
-        // Convertir el buffer a Base64 para enviarlo limpio al cliente
         const base64Pdf = Buffer.from(pdfResponse.data, 'binary').toString('base64');
 
         res.json({
@@ -268,11 +253,9 @@ app.post('/api/print-order', async (req, res) => {
     }
 });
 
-// Serve static React files
 const distPath = path.join(__dirname, '../dist');
 app.use(express.static(distPath));
 
-// Fallback to index.html for SPA routing
 app.use((req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });

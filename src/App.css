@@ -19,7 +19,6 @@
   font-size: 1.1rem;
 }
 
-/* Summary Board */
 .summary-board {
   display: flex;
   justify-content: space-around;
@@ -59,7 +58,6 @@
   color: var(--grade-na);
 }
 
-/* Add Subject Button */
 .add-subject-btn {
   display: flex;
   align-items: center;
@@ -82,7 +80,6 @@
   background-color: rgba(20, 184, 166, 0.05);
 }
 
-/* Subject Card */
 .subject-card {
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -151,7 +148,6 @@
   background: rgba(239, 68, 68, 0.1);
 }
 
-/* Units List */
 .units-list {
   display: flex;
   flex-direction: column;
@@ -206,7 +202,6 @@
   background: rgba(0,0,0,0.05);
 }
 
-/* Active States */
 .grade-btn.active.au { background: var(--grade-au); color: white; }
 .grade-btn.active.de { background: var(--grade-de); color: white; }
 .grade-btn.active.sa { background: var(--grade-sa); color: white; }
@@ -238,7 +233,6 @@
   opacity: 0.5;
 }
 
-/* Animations */
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -267,7 +261,6 @@
   }
 }
 
-/* Tabs Styles */
 .tab-btn {
   background: transparent;
   border: none;
@@ -284,7 +277,6 @@
   background-color: rgba(20, 184, 166, 0.1);
 }
 
-/* Modal Styles */
 .modal-overlay {
   position: fixed;
   top: 0;

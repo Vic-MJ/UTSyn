@@ -8,7 +8,6 @@ nav.navbar {
 }
 
 nav.navbar ul.nav li {
-    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
    color: #ffffff;
   
 }
@@ -48,7 +47,6 @@ footer {
    width:100%;
    color:rgba(0,0,0,0.2);
    opacity: 1; 
-   /*background-color: rgba(0,0,0,0.6);*/
 }
 .footerPadding{
     margin-top:10%;
@@ -62,8 +60,6 @@ footer {
     color:rgba(0,0,0,0.2);
     opacity: 1;
     z-index:-1000; 
-    /*background-color:rgba(255,255,255,0.8);*/
-    /*padding:50px 0px;*/
 }
 .folder_view {background: rgba(179,4,48,0.7); border-radius: 5px; width: 100%;}
 .gvrow {font-size: 1em; text-decoration: none; color: #f9fcfc; transition: all 0.3s ease 0s;}
@@ -105,7 +101,6 @@ footer {
 }
 
 .buttonTinto{
-    /*background-color: #4CAF50; /* Green */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -175,11 +170,6 @@ footer {
     bottom : 0;
     right : 0;
     top : 0;
-    /*
-    position:absolute;
-    width:100%;
-    height:100%;
-    background: #fff url(/Recursos/img/loading.gif) no-repeat no-repeat center;*/
 }
 
 .div7hide{
@@ -189,7 +179,6 @@ footer {
     display:normal;
 }
 
-/*calendar extender*/
 .cal_Theme1 .ajax__calendar_container   {
 background-color: #DEF1F4;
 border:solid 1px #77D5F7;
