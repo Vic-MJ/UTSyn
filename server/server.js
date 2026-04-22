@@ -272,7 +272,8 @@ app.post('/api/print-order', async (req, res) => {
 const distPath = path.join(__dirname, '../dist');
 app.use(express.static(distPath));
 
-app.get('*', (req, res) => {
+// Fallback to index.html for SPA routing
+app.use((req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
