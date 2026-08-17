@@ -1,26 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #0b1120;
-  --card-bg: rgba(30, 41, 59, 0.4);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --primary: #14b8a6; 
-  --primary-hover: #0d9488;
-  --primary-glow: rgba(20, 184, 166, 0.4);
+  --bg-color: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --primary: #0d9488; 
+  --primary-hover: #0f766e;
+  --primary-glow: rgba(13, 148, 136, 0.15);
   --secondary: #e11d48; 
   --secondary-hover: #be123c;
-  --secondary-glow: rgba(225, 29, 72, 0.4);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --secondary-glow: rgba(225, 29, 72, 0.15);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
   
   --grade-au: #10b981; 
   --grade-de: #3b82f6; 
   --grade-sa: #f59e0b; 
   --grade-na: #ef4444; 
-  --grade-none: #334155; 
+  --grade-none: #e2e8f0; 
   
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
   --glass-blur: blur(16px);
 }
 
@@ -36,7 +36,7 @@ body {
   background-image: 
     radial-gradient(circle at 15% 0%, var(--secondary-glow) 0%, transparent 40%),
     radial-gradient(circle at 85% 100%, var(--primary-glow) 0%, transparent 40%),
-    linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(11, 17, 32, 1) 100%);
+    linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, rgba(241, 245, 249, 1) 100%);
   background-attachment: fixed;
   color: var(--text-main);
   min-height: 100vh;
