@@ -323,3 +323,33 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  .app-header button, 
+  .tabs-container, 
+  .no-print,
+  .delete-btn,
+  .add-subject-btn {
+    display: none !important;
+  }
+  .glass-panel {
+    border: 1px solid #ccc;
+    box-shadow: none !important;
+    background: white !important;
+  }
+  .kardex-print-header {
+    margin-bottom: 2rem !important;
+  }
+  .subject-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

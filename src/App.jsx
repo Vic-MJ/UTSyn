@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Plus, Trash2, BookOpen, Calculator, GraduationCap, LogIn, Loader2, UserCircle, History, ListTodo, Wallet, User as UserIcon } from 'lucide-react';
+import { Plus, Trash2, BookOpen, Calculator, GraduationCap, LogIn, Loader2, UserCircle, History, ListTodo, Wallet, User as UserIcon, Download } from 'lucide-react';
 import './App.css';
 
 const GRADE_VALUES = {
@@ -364,7 +364,20 @@ export default function App() {
                   <h2>No hay historial académico</h2>
                 </div>
               ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: '1.5rem', width: '100%' }}>
+              <>
+                <div className="kardex-print-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div style={{ color: 'var(--text-main)', fontSize: '0.9rem', fontStyle: 'italic', flex: 1, minWidth: '250px' }}>
+                    * Este kardex es únicamente de carácter informativo y <strong>no tiene validez oficial</strong>.
+                  </div>
+                  <button 
+                    onClick={() => window.print()}
+                    className="add-subject-btn no-print" 
+                    style={{ margin: 0, padding: '0.5rem 1.5rem', width: 'auto', backgroundColor: 'var(--primary)', color: '#fff', border: 'none' }}
+                  >
+                    <Download size={18} style={{ marginRight: '0.5rem' }} /> Descargar Kardex
+                  </button>
+                </div>
+                <div className="kardex-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: '1.5rem', width: '100%' }}>
                 {kardex.map((cycle) => {
                   let cycleSum = 0; let cycleCount = 0;
                   cycle.subjects.forEach(subject => {
@@ -412,6 +425,7 @@ export default function App() {
                   </div>
                 );})}
               </div>
+              </>
               )}
             </>
           )}
