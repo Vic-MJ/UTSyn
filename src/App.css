@@ -325,9 +325,13 @@
 }
 
 @media print {
+  @page {
+    margin: 0.5cm;
+  }
   body {
     background: white;
     color: black;
+    font-size: 10pt;
   }
   .app-header button, 
   .tabs-container, 
@@ -336,17 +340,63 @@
   .add-subject-btn {
     display: none !important;
   }
+  .app-header {
+    padding: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .app-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 0 !important;
+  }
+  .summary-board {
+    padding: 0.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    border-top: 2px solid var(--primary) !important;
+  }
+  .summary-label {
+    font-size: 0.75rem !important;
+  }
+  .summary-value {
+    font-size: 1.5rem !important;
+  }
   .glass-panel {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd !important;
     box-shadow: none !important;
     background: white !important;
+    padding: 0.5rem !important;
   }
   .kardex-print-header {
-    margin-bottom: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .kardex-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+    margin-top: 0 !important;
   }
   .subject-card {
+    margin-bottom: 0 !important;
     break-inside: avoid;
     page-break-inside: avoid;
+  }
+  .subject-card h3 {
+    font-size: 0.95rem !important;
+    margin-bottom: 0 !important;
+  }
+  .subject-average-pill {
+    padding: 0.1rem 0.5rem !important;
+    font-size: 0.8rem !important;
+  }
+  .units-list {
+    gap: 0.2rem !important;
+  }
+  .unit-item {
+    padding: 0.25rem 0.5rem !important;
+    gap: 0.5rem !important;
+    border-color: #eee !important;
+  }
+  .unit-name {
+    font-size: 0.85rem !important;
   }
   * {
     -webkit-print-color-adjust: exact !important;
