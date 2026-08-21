@@ -11,6 +11,13 @@ const GRADE_VALUES = {
   AC: null 
 };
 
+const getGradeValue = (subjectName, grade) => {
+  if (grade === 'AC' && typeof subjectName === 'string' && subjectName.toUpperCase().trim() === 'ESTADIA EN EL SECTOR PRODUCTIVO') {
+    return 10;
+  }
+  return GRADE_VALUES[grade] !== undefined ? GRADE_VALUES[grade] : null;
+};
+
 const GRADES = ['AU', 'DE', 'SA', 'NA'];
 
 export default function App() {
@@ -122,19 +129,19 @@ export default function App() {
   const removeUnit = (subjectId, unitId) => {
     setSubjects(subjects.map(s => s.id === subjectId ? { ...s, units: s.units.filter(u => u.id !== unitId) } : s));
   };
-  const calculateSubjectAverage = (units) => {
+  const calculateSubjectAverage = (subjectName, units) => {
     if (units.length === 0) return 0;
-    const gradedUnits = units.filter(u => u.grade && GRADE_VALUES[u.grade] !== null);
+    const gradedUnits = units.filter(u => u.grade && getGradeValue(subjectName, u.grade) !== null);
     if (gradedUnits.length === 0) return 0;
-    const sum = gradedUnits.reduce((acc, curr) => acc + GRADE_VALUES[curr.grade], 0);
+    const sum = gradedUnits.reduce((acc, curr) => acc + getGradeValue(subjectName, curr.grade), 0);
     return sum / gradedUnits.length;
   };
 
   const currentGeneralAverage = useMemo(() => {
     if (subjects.length === 0) return 0;
-    const validSubjects = subjects.filter(s => s.units.some(u => u.grade && GRADE_VALUES[u.grade] !== null));
+    const validSubjects = subjects.filter(s => s.units.some(u => u.grade && getGradeValue(s.name, u.grade) !== null));
     if (validSubjects.length === 0) return 0;
-    const sum = validSubjects.reduce((acc, curr) => acc + calculateSubjectAverage(curr.units), 0);
+    const sum = validSubjects.reduce((acc, curr) => acc + calculateSubjectAverage(curr.name, curr.units), 0);
     return sum / validSubjects.length;
   }, [subjects]);
 
@@ -143,8 +150,9 @@ export default function App() {
     let totalSum = 0; let totalSubjects = 0;
     kardex.forEach(cycle => {
       cycle.subjects.forEach(subject => {
-        if (subject.grade && GRADE_VALUES[subject.grade] !== null) {
-          totalSum += GRADE_VALUES[subject.grade];
+        const gradeVal = getGradeValue(subject.name, subject.grade);
+        if (subject.grade && gradeVal !== null) {
+          totalSum += gradeVal;
           totalSubjects++;
         }
       });
@@ -311,7 +319,7 @@ export default function App() {
               ) : (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 500px), 1fr))', gap: '1.5rem', width: '100%' }}>
                 {subjects.map((subject) => {
-                  const subjectAvg = calculateSubjectAverage(subject.units);
+                  const subjectAvg = calculateSubjectAverage(subject.name, subject.units);
                   return (
                     <div key={subject.id} className="subject-card glass-panel animate-slide-in">
                       <div className="subject-header">
@@ -381,8 +389,9 @@ export default function App() {
                 {kardex.map((cycle) => {
                   let cycleSum = 0; let cycleCount = 0;
                   cycle.subjects.forEach(subject => {
-                    if (subject.grade && GRADE_VALUES[subject.grade] !== null) {
-                      cycleSum += GRADE_VALUES[subject.grade];
+                    const gradeVal = getGradeValue(subject.name, subject.grade);
+                    if (subject.grade && gradeVal !== null) {
+                      cycleSum += gradeVal;
                       cycleCount++;
                     }
                   });
@@ -400,7 +409,7 @@ export default function App() {
                     
                     <div className="units-list">
                       {cycle.subjects.map(subject => {
-                        const numericGrade = GRADE_VALUES[subject.grade];
+                        const numericGrade = getGradeValue(subject.name, subject.grade);
                         const isPassing = numericGrade >= 8;
                         const gradeColor = subject.grade === 'AU' || subject.grade === 'CA' ? 'var(--grade-au)' : 
                                            subject.grade === 'DE' ? 'var(--grade-de)' :
